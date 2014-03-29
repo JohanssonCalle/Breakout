@@ -20,32 +20,32 @@ protected:
 };
 
 
-class Player : public GameObject {
-public:
-	Player();
-	~Player();
-
-	void Update(float deltatime);
-
-protected:
-	int m_score;
-};
-
-class Enemy : public GameObject {
-public:
-	~Enemy();
-
-	void Update(float deltatime);
-};
-
-class GameObjectManager {
-public:
-	GameObjectManager();
-	~GameObjectManager();
-
-	void Attach(GameObject *object);
-	void UpdateAllGameObject(float deltatime);
-
-private:
-	std::vector<GameObject*> m_objects;
-};
+//class Player : public GameObject {
+//public:
+//	Player();
+//	~Player();
+//
+//	void Update(float deltatime);
+//
+//protected:
+//	int m_score;
+//};
+//
+//class Enemy : public GameObject {
+//public:
+//	~Enemy();
+//
+//	void Update(float deltatime);
+//};
+//
+//class GameObjectManager {
+//public:
+//	GameObjectManager();
+//	~GameObjectManager();
+//
+//	void Attach(GameObject *object);
+//	void UpdateAllGameObject(float deltatime);
+//
+//private:
+//	std::vector<GameObject*> m_objects;
+//};
