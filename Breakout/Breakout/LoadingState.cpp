@@ -1,19 +1,31 @@
 // LoadingState.cpp
 
+#include <SDL.h>
+#pragma comment(lib, "SDL2.lib")
+#pragma comment(lib, "SDL2main.lib")
+
 #include <iostream>
 #include "LoadingState.h"
+#include "Engine.h"
 
-LoadingState::LoadingState() {
+LoadingState::LoadingState(Engine* _engine) {
 	std::cout << "LoadingState::LoadingState" << std::endl;
+
+	m_engine = _engine;
 };
 
 bool LoadingState::Enter() {
 	std::cout << "LoadingState::Enter" << std::endl;
+
+	scale = m_engine->scale;
+
 	return true;
 };
 
 void LoadingState::Exit() {
 	std::cout << "LoadingState::Exit" << std::endl;
+
+	delete m_engine; m_engine = nullptr;
 };
 
 bool LoadingState::Update(float deltatime) {
@@ -23,6 +35,8 @@ bool LoadingState::Update(float deltatime) {
 
 void LoadingState::Draw() {
 	std::cout << "LoadingState::Draw" << std::endl;
+
+	//m_engine->m_draw_manager->Draw();
 };
 
 std::string LoadingState::Next() {

@@ -4,9 +4,13 @@
 
 #include "State.h"
 
+#include "Vector2.h"
+
+class Engine;
+
 class MenuState : public State {
 public:
-	MenuState();
+	MenuState(Engine* _engine);
 
 	bool Enter();
 	void Exit();
@@ -16,6 +20,9 @@ public:
 	bool IsType(const std::string &type);
 
 private:
+	Engine* m_engine;
 	bool m_done;
 	std::string m_next_state;
+
+	Vector2 scale;
 };

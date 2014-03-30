@@ -1,20 +1,34 @@
 // MenuState.cpp
 
+#include <SDL.h>
+#pragma comment(lib, "SDL2.lib")
+#pragma comment(lib, "SDL2main.lib")
+
 #include <iostream>
 #include "MenuState.h"
 
-MenuState::MenuState() {
+#include "Engine.h"
+
+MenuState::MenuState(Engine* _engine) {
 	std::cout << "MenuState::MenuState" << std::endl;
+
+	m_engine = _engine;
+
 	m_done = false;
 };
 
 bool MenuState::Enter() {
 	std::cout << "MenuState::Enter" << std::endl;
+
+	scale = m_engine->scale;
+
 	return true;
 };
 
 void MenuState::Exit() {
 	std::cout << "MenuState::Exit" << std::endl;
+
+	delete m_engine; m_engine = nullptr;
 };
 
 bool MenuState::Update(float deltatime) {

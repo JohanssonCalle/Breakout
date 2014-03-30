@@ -3,6 +3,9 @@
 #include <iostream>
 #include "GameObject.h"
 
+#include "Sprite.h"
+#include "Collider.h"
+
 unsigned int GameObject::ms_object_count = 0;
 
 unsigned int GameObject::GetCount() {
@@ -14,6 +17,16 @@ GameObject::GameObject() {
 	m_x = 0.0f;
 	m_y = 0.0f;
 };
+
+GameObject::GameObject(Sprite* _sprite, Collider* _collider)
+{
+	m_sprite = _sprite;
+	m_collider = _collider;
+
+	ms_object_count++;
+	m_x = 0.0f;
+	m_y = 0.0f;
+}
 
 GameObject::~GameObject() {
 	std::cout << "GameObject::~GameObject" << std::endl;

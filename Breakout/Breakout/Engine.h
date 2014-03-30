@@ -2,10 +2,17 @@
 #pragma once
 
 #include "StateManager.h"
-#include <vector>
+#include "Vector2.h"
+
+class DrawManager;
+class SpriteManager;
 
 class Engine
 {
+	friend class GameState;
+	friend class LoadingState;
+	friend class MenuState;
+
 public:
 	Engine();
 
@@ -20,7 +27,7 @@ public:
 
 	void CleanUp();
 
-	float scalex, scaley;
+	Vector2 scale;
 	int m_window_width, m_window_height;
 
 private:
@@ -31,4 +38,7 @@ private:
 	StateManager m_state_manager;
 	struct SDL_Window* m_window;
 	struct SDL_Renderer* m_renderer;
+
+	DrawManager* m_draw_manager;
+	SpriteManager* m_sprite_manager;
 };

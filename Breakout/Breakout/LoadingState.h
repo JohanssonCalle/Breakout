@@ -4,9 +4,13 @@
 
 #include "State.h"
 
+#include "Vector2.h"
+
+class Engine;
+
 class LoadingState : public State {
 public:
-	LoadingState();
+	LoadingState(Engine* _engine);
 
 	bool Enter();
 	void Exit();
@@ -16,5 +20,7 @@ public:
 	bool IsType(const std::string &type);
 
 private:
-	/// ....
+	Engine* m_engine;
+
+	Vector2 scale;
 };
