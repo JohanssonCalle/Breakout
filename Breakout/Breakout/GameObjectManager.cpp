@@ -28,12 +28,13 @@ void GameObjectManager::Attach(GameObject *object) {
 	m_collision_manager->Attach(object->getCollider());
 };
 
-void GameObjectManager::UpdateAllGameObject(float deltatime) {
+void GameObjectManager::UpdateAllGameObject(float deltatime)
+{
+	m_collision_manager->CheckCollision();
+
 	for(unsigned int i = 0; i < m_objects.size(); i++) {
 		m_objects[i]->Update(deltatime);
 	};
-
-	m_collision_manager->CheckCollision();
 };
 
 void GameObjectManager::DrawAllGameObjects(DrawManager* _draw_manager)
@@ -41,5 +42,13 @@ void GameObjectManager::DrawAllGameObjects(DrawManager* _draw_manager)
 	for(int i = 0; i < m_objects.size(); i++)
 	{
 		m_objects[i]->Draw(_draw_manager);
+	}
+}
+
+void GameObjectManager::getScore()
+{
+	for(int i = 0; i < m_objects.size(); i++)
+	{
+		m_score += m_objects[i]->m_score;
 	}
 }

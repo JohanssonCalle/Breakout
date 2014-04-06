@@ -8,6 +8,8 @@
 class DrawManager;
 class SpriteManager;
 class Sprite;
+class MusicManager;
+class MusicClip;
 
 class Engine
 {
@@ -50,6 +52,8 @@ private:
 
 	DrawManager* m_draw_manager;
 	SpriteManager* m_sprite_manager;
+	MusicManager* m_musicmanager;
+	MusicClip* m_music;
 
 	Sprite* spr_background;
 

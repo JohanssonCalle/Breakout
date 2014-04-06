@@ -3,6 +3,7 @@
 #include <SDL.h>
 #pragma comment(lib, "SDL2.lib")
 #pragma comment(lib, "SDL2main.lib")
+#pragma comment(lib, "SDL2_mixer.lib")
 #include "Engine.h"
 
 #include "DrawManager.h"
@@ -13,6 +14,9 @@
 #include "MenuState.h"
 #include "GameState.h"
 #include "LoadingState.h"
+
+#include "MusicManager.h"
+#include "MusicClip.h"
 
 #include <iostream>
 #include <sstream>
@@ -101,7 +105,6 @@ bool Engine::Init()
 	m_state_manager.Attach(new GameState(this));
 	m_state_manager.Attach(new MenuState(this));
 	m_state_manager.Attach(new LoadingState(this));
-	//m_state_manager.SetState("LoadingState");
 
 	if(m_window == nullptr || m_renderer == nullptr)
 	{
@@ -122,10 +125,14 @@ bool Engine::Init()
 
 	m_sprite_manager->Load("spr_background.png",0,0,1280,720);
 	spr_background = m_sprite_manager->getSprite("spr_background.png",0,0,1280,720);
+	
+	m_musicmanager = new MusicManager();
+	m_music = m_musicmanager->CreateMusic("../data/sounds/msc_song.mp3");
+	m_music->Play();
 
 	m_running = true;
 
-	m_state_manager.SetState("GameState");
+	m_state_manager.SetState("LoadingState");
 
 	return true;
 }
@@ -136,7 +143,9 @@ void Engine::Run()
 	{
 		updateDeltatime();
 		updateEvents();
-
+		if(m_keyboard.IsDownOnce(SDLK_p)) m_music->Pause();
+		else if (m_keyboard.IsDownOnce(SDLK_s)) m_music->Stop();
+		else if (m_keyboard.IsDownOnce(SDLK_d)) m_music->Play();
 		Update(m_deltatime);
 		Draw();
 	}

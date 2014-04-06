@@ -9,8 +9,6 @@ class Collider;
 class DrawManager;
 
 class GameObject {
-	//friend class CollisionManager;
-
 public:
 	GameObject(Sprite* _sprite = nullptr, Collider* _collider = nullptr);
 
@@ -24,6 +22,8 @@ public:
 	Sprite* getSprite();
 	bool hasCollider();
 	Collider* getCollider();
+
+	int m_score;
 
 protected:
 	Vector2 m_scale;

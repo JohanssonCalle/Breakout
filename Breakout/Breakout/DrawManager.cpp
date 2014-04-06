@@ -41,4 +41,4 @@ void DrawManager::Draw(Sprite *sprite, int x, int y) {
 	SDL_Rect src = { sprite->m_x, sprite->m_y, sprite->m_width, sprite->m_height };
 	SDL_Rect dst = { x, y, sprite->m_width, sprite->m_height };
 	SDL_RenderCopy(m_renderer, sprite->m_texture, &src, &dst);
-};
+}

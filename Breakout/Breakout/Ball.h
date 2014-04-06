@@ -13,6 +13,8 @@ class DrawManager;
 class Sprite;
 class Collider;
 class Keyboard;
+class SoundManager;
+class SoundClip;
 
 class Ball : public GameObject
 {
@@ -41,6 +43,9 @@ private:
 	Sprite* m_sprite;
 	Collider* m_collider;
 	Keyboard* m_keyboard;
+
+	SoundManager* m_soundmanager;
+	SoundClip* m_sound;
 
 	Vector2 m_dir;
 	Vector2 m_pos;

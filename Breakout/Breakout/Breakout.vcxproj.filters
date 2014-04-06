@@ -102,6 +102,18 @@
     <ClCompile Include="FileManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="SoundClip.cpp">
+      <Filter>Source Files\Subsystems</Filter>
+    </ClCompile>
+    <ClCompile Include="MusicClip.cpp">
+      <Filter>Source Files\Subsystems</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="MusicManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -165,6 +177,18 @@
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="FileManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicClip.h">
+      <Filter>Header Files\Subsystems</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundClip.h">
+      <Filter>Header Files\Subsystems</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>

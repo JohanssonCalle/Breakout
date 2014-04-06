@@ -18,6 +18,10 @@ public:
 	void UpdateAllGameObject(float deltatime);
 	void DrawAllGameObjects(DrawManager* _draw_manager);
 
+	void getScore();
+
+	int m_score;
+
 private:
 	std::vector<GameObject*> m_objects;
 

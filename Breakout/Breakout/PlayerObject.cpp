@@ -13,6 +13,8 @@ PlayerObject::PlayerObject(Sprite* _sprite, Collider* _collider)
 {
 	m_sprite = _sprite;
 	m_collider = _collider;
+
+	m_score = 0;
 }
 
 PlayerObject::~PlayerObject()

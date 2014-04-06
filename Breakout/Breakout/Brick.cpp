@@ -11,6 +11,8 @@ Brick::Brick(Sprite* _sprite, Collider* _collider)
 {
 	m_sprite = _sprite;
 	m_collider = _collider;
+
+	m_score = 0;
 }
 
 Brick::~Brick()
@@ -25,7 +27,7 @@ void Brick::Update(float _deltatime)
 	{
 		Destroy();
 
-
+		m_score += 100;
 	}
 }
 	
@@ -58,6 +60,8 @@ void Brick::Destroy()
 {
 	delete m_sprite; m_sprite = nullptr;
 	delete m_collider; m_collider = nullptr;
+
+	m_score += 100;
 }
 
 Vector2 Brick::getPosition(){return m_pos;}
