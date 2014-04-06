@@ -12,12 +12,15 @@
 #include "DrawManager.h"
 #include "SpriteManager.h"
 #include "GameObjectManager.h"
+#include "CollisionManager.h"
 #include "Sprite.h"
 
 GameState::GameState(Engine* _engine) {
 	m_engine = _engine;
 
-	m_gameobject_manager = new GameObjectManager();
+	m_collision_manager = new CollisionManager();
+
+	m_gameobject_manager = new GameObjectManager(m_collision_manager);
 
 	m_level = new Level(m_gameobject_manager);
 };

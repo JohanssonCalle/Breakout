@@ -2,13 +2,11 @@
 
 #pragma once
 
-#include "Collider.h"
-
 #include "Vector2.h"
 #include <cmath>
 #include <vector>
 
-class GameObject;
+class Collider;
 
 class CollisionManager
 {
@@ -18,7 +16,7 @@ public:
 	CollisionManager();
 	void Cleanup();
 
-	void Attach(GameObject* _gameobject);
+	void Attach(Collider* _collider);
 
 	void CheckCollision();
 

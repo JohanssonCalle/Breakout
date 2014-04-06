@@ -8,6 +8,7 @@
 
 class Engine;
 class GameObjectManager;
+class CollisionManager;
 class Level;
 
 class GameState : public State {
@@ -23,6 +24,7 @@ public:
 
 private:
 	Engine* m_engine;
+	CollisionManager* m_collision_manager;
 	GameObjectManager* m_gameobject_manager;
 	Level* m_level;
 

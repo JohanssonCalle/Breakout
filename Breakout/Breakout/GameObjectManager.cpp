@@ -17,10 +17,15 @@ GameObjectManager::~GameObjectManager() {
 		++it;
 	};
 	m_objects.clear();
+
+	delete m_collision_manager;
+	m_collision_manager = nullptr;
 };
 
 void GameObjectManager::Attach(GameObject *object) {
 	m_objects.push_back(object);
+
+	m_collision_manager->Attach(object->getCollider());
 };
 
 void GameObjectManager::UpdateAllGameObject(float deltatime) {
