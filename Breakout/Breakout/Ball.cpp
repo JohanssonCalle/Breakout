@@ -33,8 +33,6 @@ Ball::Ball(Sprite* _sprite, Collider* _collider)
 
 	m_dir.m_x = Random(-.7f,.7f);
 	m_dir.m_y = Random(0.f, 1.f);
-
-	m_score = 0;
 }
 
 Ball::~Ball()
@@ -84,21 +82,20 @@ void Ball::Update(float _deltatime)
 		if(m_pos.m_x > m_window_dimensions.m_x - 80*m_scale.m_x - m_collider->m_extension.m_x)
 		{
 			m_dir.m_x *= -1;
-
 			m_sound->Play();
 		}else if(m_pos.m_x < 80*m_scale.m_x)
 		{
 			m_dir.m_x *= -1;
-
 			m_sound->Play();
 		}else if(m_pos.m_y < 80*m_scale.m_x)
 		{
 			m_dir.m_y *= -1;
-
 			m_sound->Play();
 		}
 		if(m_collider->m_collided == true)
 		{
+			if(m_collider->m_direction == "Left" || m_collider->m_direction == "Right") m_dir.m_x *= -1;
+			else if(m_collider->m_direction == "Top" || m_collider->m_direction == "Bottom") m_dir.m_y *= -1;
 			m_sound->Play();
 		}
 		m_timer += _deltatime;

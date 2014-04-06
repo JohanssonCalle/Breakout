@@ -123,20 +123,24 @@ bool Circle::Overlap(Collider &other, Vector2 &offset)
 {
 	float radius = m_extension.m_x/2;
 	Vector2 center = Vector2(m_position.m_x + radius, m_position.m_y + radius);
+	
 
 	if(	center.m_x + radius > other.m_position.m_x && center.m_x - radius < other.m_position.m_x + other.m_extension.m_x &&
 		center.m_y + radius > other.m_position.m_y && center.m_y - radius < other.m_position.m_y + other.m_extension.m_y)
 	{
-		if(m_prev_position.m_x < m_position.m_x)
+		if(m_position.m_x <= other.m_position.m_x && m_position.m_y > other.m_position.m_y && m_position.m_y < other.m_position.m_y + other.m_extension.m_y)
 		{
 			m_direction = "Left";
-		}else if(m_prev_position.m_y < m_position.m_y)
+		}
+		else if(m_position.m_y <= other.m_position.m_y && m_position.m_x > other.m_position.m_x && m_position.m_x < other.m_position.m_x + other.m_extension.m_x)
 		{
 			m_direction = "Top";
-		}else if(m_prev_position.m_x > m_position.m_x)
+		}
+		else if(m_position.m_y > other.m_position.m_y && m_position.m_y < other.m_position.m_y + other.m_extension.m_y && m_position.m_x >= other.m_position.m_x + other.m_extension.m_x)
 		{
 			m_direction = "Right";
-		}else if(m_prev_position.m_y > m_position.m_y)
+		}
+		else if(m_position.m_x > other.m_position.m_x && m_position.m_y >= other.m_position.m_y + other.m_extension.m_y && m_position.m_x < other.m_position.m_x + other.m_extension.m_x)
 		{
 			m_direction = "Bottom";
 		}
