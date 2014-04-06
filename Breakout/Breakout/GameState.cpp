@@ -13,6 +13,7 @@
 #include "SpriteManager.h"
 #include "GameObjectManager.h"
 #include "CollisionManager.h"
+#include "FileManager.h"
 #include "Sprite.h"
 
 GameState::GameState(Engine* _engine) {
@@ -23,6 +24,8 @@ GameState::GameState(Engine* _engine) {
 	m_gameobject_manager = new GameObjectManager(m_collision_manager);
 
 	m_level = new Level(m_gameobject_manager);
+
+	m_file_manager = new FileManager(m_gameobject_manager);
 };
 
 bool GameState::Enter() {
@@ -31,7 +34,7 @@ bool GameState::Enter() {
 	if(!m_level->Load("../data/level/level.txt", m_engine->m_sprite_manager))
 		return false;
 
-
+	m_file_manager->Initialize("../data/");
 
 	return true;
 };

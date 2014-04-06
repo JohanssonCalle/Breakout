@@ -27,6 +27,8 @@ public:
 	Vector2 getPosition();
 	Vector2 getDimensions();
 
+	void Destroy();
+
 private:
 	Sprite* m_sprite;
 	Collider* m_collider;

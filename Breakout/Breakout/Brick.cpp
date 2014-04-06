@@ -21,7 +21,12 @@ Brick::~Brick()
 
 void Brick::Update(float _deltatime)
 {
+	if(m_collider->m_collided)
+	{
+		Destroy();
 
+
+	}
 }
 	
 void Brick::Draw(DrawManager* _draw_manager)
@@ -47,6 +52,12 @@ void Brick::setDimension(int _width, int _height)
 void Brick::setDimension(Vector2 _dimensions)
 {
 	m_dimensions = _dimensions;
+}
+
+void Brick::Destroy()
+{
+	delete m_sprite; m_sprite = nullptr;
+	delete m_collider; m_collider = nullptr;
 }
 
 Vector2 Brick::getPosition(){return m_pos;}

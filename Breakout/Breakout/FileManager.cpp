@@ -1,53 +1,34 @@
 //FileManager.cpp
 
 #include "FileManager.h"
+
 #include "GameObject.h"
+#include "GameObjectManager.h"
+
 #include "Vector2.h"
-#include "GameObject.h"
+
 #include "Sprite.h"
-#include "SpriteManager.h"
+
 #include "Collider.h"
+
 #include "PlayerObject.h"
 #include "Ball.h"
 #include "Brick.h"
+
 #include <sstream>
 #include <iostream>
 
-FileManager::FileManager()
+FileManager::FileManager(GameObjectManager* _gameobject_manager)
 {
-
+	m_gameobject_manager = _gameobject_manager;
 }
 
-void FileManager::Initialize(std::string directory)
+void FileManager::Initialize(const std::string &directory)
 {
 	m_directory = directory;
 }
 
-std::map<std::string, float> FileManager::ReadSettings(std::string filename)
-{
-	inStream.open(m_directory + filename);
-
-	std::string key;
-	float value = 0;
-
-	if(inStream.is_open())
-	{
-		while(!inStream.eof())
-		{
-			inStream >> key >> value;
-			
-			m_settings.insert( std::pair <std::string, float>(key, value) );
-		}
-		inStream.close();
-		return m_settings;
-	}
-	else
-	{
-		std::cout << "Error, could not read from file" << std::endl;
-	}
-}
-
-void FileManager::ReadObjects(std::string filename, SpriteManager* sprite_manager)
+void FileManager::ReadObjects(const std::string &filename, SpriteManager* _sprite_manager)
 {
 	inStream.open(m_directory + filename);
 
@@ -67,14 +48,14 @@ void FileManager::ReadObjects(std::string filename, SpriteManager* sprite_manage
 		{
 			for(int c = 0;c < columns; c++)
 			{
-				sprite_manager->Load(spritesource, 0, 0, width, height);
-				Sprite* sprite = sprite_manager->getSprite(spritesource, 0, 0, width, height);
+				Sprite* sprite = _sprite_manager->getSprite(spritesource, 0, 0, width, height);
 				Box *collider = new Box;
 				collider->m_position=Vector2(tpos.m_x,tpos.m_y);
 				collider->m_extension=Vector2(width,height);
 
 				Brick* brick = new Brick(sprite, collider);
-				m_bricks.push_back(brick);
+				m_gameobject_manager->Attach(brick);
+
 				tpos.m_x += width;
 			}
 			tpos.m_x = pos.m_x;
@@ -83,24 +64,27 @@ void FileManager::ReadObjects(std::string filename, SpriteManager* sprite_manage
 		while(!inStream.eof())
 		{
 			inStream >> key >> width >> height >> pos.m_x >> pos.m_y >> spritesource;
-			sprite_manager->Load(spritesource, 0, 0, width, height);
-			Sprite* sprite = sprite_manager->getSprite(spritesource, 0, 0, width, height);
+			Sprite* sprite = _sprite_manager->getSprite(spritesource, 0, 0, width, height);
 			
 			if(key == "player")
 			{
 				Box *collider = new Box;
 				collider->m_position=Vector2(pos.m_x,pos.m_y);
 				collider->m_extension=Vector2(width,height);
-				m_player = new PlayerObject(sprite, collider);
+				PlayerObject* m_player = new PlayerObject(sprite, collider);
 				m_player->setPosition(Vector2(pos.m_x,pos.m_y));
+
+				m_gameobject_manager->Attach(m_player);
 			}
 			else if(key == "ball")
 			{
 				Circle *collider = new Circle;
 				collider->m_position=Vector2(pos.m_x,pos.m_y);
 				collider->m_extension=Vector2(width,height);
-				m_ball = new Ball(sprite, collider);
+				Ball* m_ball = new Ball(sprite, collider);
 				m_ball->setPosition(Vector2(pos.m_x,pos.m_y));
+
+				m_gameobject_manager->Attach(m_ball);
 			}
 		}
 		inStream.close();
@@ -111,7 +95,7 @@ void FileManager::ReadObjects(std::string filename, SpriteManager* sprite_manage
 	}
 }
 
-int FileManager::ReadHighscore(std::string filename)
+int FileManager::ReadHighscore(const std::string &filename)
 {
 	inStream.open(m_directory + filename);
 	
@@ -128,7 +112,7 @@ int FileManager::ReadHighscore(std::string filename)
 	}
 }
 
-void FileManager::WriteFile(std::string filename, int newhighscore)
+void FileManager::WriteFile(const std::string &filename, int newhighscore)
 {
 	outStream.open(m_directory + filename);
 
@@ -138,21 +122,6 @@ void FileManager::WriteFile(std::string filename, int newhighscore)
 	}
 	else
 	{
-		std::cout << "Error, could not write from file" << std::endl;
+		std::cout << "Error, could not write to file" << std::endl;
 	}
-}
-
-PlayerObject* FileManager::returnPlayer()
-{
-	return m_player;
-}
-
-Ball* FileManager::returnBall()
-{
-	return m_ball;
-}
-
-std::vector<Brick*> FileManager::returnBricks()
-{
-	return m_bricks;
 }
