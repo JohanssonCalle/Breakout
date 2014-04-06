@@ -7,6 +7,8 @@
 #include "Vector2.h"
 
 class Engine;
+class FileManager;
+class Sprite;
 
 class LoadingState : public State {
 public:
@@ -21,6 +23,9 @@ public:
 
 private:
 	Engine* m_engine;
+	Sprite* spr_loading;
+
+	Vector2 pos;
 
 	Vector2 scale;
 };
