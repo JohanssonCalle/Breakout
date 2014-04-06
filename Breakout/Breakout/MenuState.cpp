@@ -9,6 +9,13 @@
 
 #include "Engine.h"
 
+#include "Sprite.h"
+#include "SpriteManager.h"
+
+#include "DrawManager.h"
+
+#include "Input.h"
+
 MenuState::MenuState(Engine* _engine) {
 	std::cout << "MenuState::MenuState" << std::endl;
 
@@ -22,6 +29,9 @@ bool MenuState::Enter() {
 
 	scale = m_engine->scale;
 
+	m_engine->m_sprite_manager->Load("spr_menu.png",0,0,1280,720);
+	spr_menu = m_engine->m_sprite_manager->getSprite("spr_menu.png",0,0,1280,720);
+
 	return true;
 };
 
@@ -32,30 +42,25 @@ void MenuState::Exit() {
 };
 
 bool MenuState::Update(float deltatime) {
-	std::cout << "MenuState::Update" << std::endl;
-	std::cout << "[new]  New game" << std::endl;
-	std::cout << "[opt]  Options" << std::endl;
-	std::cout << "[quit] Quit" << std::endl;
-	std::string choice;
-	std::cin >> choice;
-	if(choice.compare("new") == 0) {
-		m_next_state = "GameState";
-		m_done = true;
-	}
-	else if(choice.compare("opt") == 0) {
-		m_next_state = "OptionsState";
-		m_done = true;
-	}
-	else if(choice.compare("quit") == 0){
+	
+	if(m_engine->m_keyboard.IsDownOnce(27))
+	{
 		m_next_state = "";
-		m_done = true;
-	};
+		Next();
+	}
+	if(m_engine->m_keyboard.IsDownOnce(32))
+	{
+		m_next_state = "GameState";
+		Next();
+	}
 
 	return !m_done;
 };
 
 void MenuState::Draw() {
 	std::cout << "MenuState::Draw" << std::endl;
+
+	m_engine->m_draw_manager->Draw(spr_menu,0,0);
 };
 
 std::string MenuState::Next() {

@@ -8,6 +8,8 @@
 
 class Engine;
 
+class Sprite;
+
 class MenuState : public State {
 public:
 	MenuState(Engine* _engine);
@@ -23,6 +25,8 @@ private:
 	Engine* m_engine;
 	bool m_done;
 	std::string m_next_state;
+
+	Sprite* spr_menu;
 
 	Vector2 scale;
 };
