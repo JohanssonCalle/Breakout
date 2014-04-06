@@ -3,9 +3,12 @@
 #include "GameObjectManager.h"
 
 #include "DrawManager.h"
+#include "CollisionManager.h"
 
-GameObjectManager::GameObjectManager() {
-};
+GameObjectManager::GameObjectManager(CollisionManager* _collision_manager) 
+{
+	m_collision_manager = _collision_manager;
+}
 
 GameObjectManager::~GameObjectManager() {
 	auto it = m_objects.begin();
@@ -24,6 +27,8 @@ void GameObjectManager::UpdateAllGameObject(float deltatime) {
 	for(unsigned int i = 0; i < m_objects.size(); i++) {
 		m_objects[i]->Update(deltatime);
 	};
+
+	m_collision_manager->CheckCollision();
 };
 
 void GameObjectManager::DrawAllGameObjects(DrawManager* _draw_manager)

@@ -6,7 +6,7 @@
 
 #include "Vector2.h"
 #include <cmath>
-#include <map>
+#include <vector>
 
 class GameObject;
 
@@ -16,11 +16,12 @@ class CollisionManager
 
 public:
 	CollisionManager();
+	void Cleanup();
 
 	void Attach(GameObject* _gameobject);
 
 	void CheckCollision();
 
 private:
-
+	std::vector<Collider*> m_colliders;
 };

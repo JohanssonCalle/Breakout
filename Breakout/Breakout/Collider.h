@@ -21,6 +21,8 @@ public:
 
 	Vector2 m_prev_position;
 	std::string m_direction;
+
+	bool m_collided;
 };
 
 class Box : public Collider

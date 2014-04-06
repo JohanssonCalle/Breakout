@@ -34,6 +34,9 @@ void SpriteManager::Cleanup() {
 	};
 	m_sprites.clear();
 
+	delete m_draw_manager; 
+	m_draw_manager = nullptr; 
+
 	IMG_Quit();
 };
 
@@ -46,8 +49,7 @@ void SpriteManager::Load(const std::string &filename, int x, int y, int width, i
 			std::cout << "File not found" << std::endl;
 		};
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(
-			m_draw_manager->m_renderer,
-			surface);
+			m_draw_manager->m_renderer, surface);
 
 		Pair pair = { surface, texture };
 

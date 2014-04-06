@@ -7,10 +7,11 @@
 #include <vector>
 
 class DrawManager;
+class CollisionManager;
 
 class GameObjectManager {
 public:
-	GameObjectManager();
+	GameObjectManager(CollisionManager* _collision_manager);
 	~GameObjectManager();
 
 	void Attach(GameObject *object);
@@ -19,4 +20,6 @@ public:
 
 private:
 	std::vector<GameObject*> m_objects;
+
+	CollisionManager* m_collision_manager;
 };
