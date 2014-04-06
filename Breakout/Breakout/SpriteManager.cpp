@@ -4,6 +4,7 @@
 #pragma comment(lib,"sdl2_image.lib")
 
 #include <iostream>
+#include <map>
 
 #include "DrawManager.h"
 #include "Sprite.h"
@@ -56,8 +57,9 @@ void SpriteManager::Load(const std::string &filename, int x, int y, int width, i
 
 Sprite* SpriteManager::getSprite(const std::string &_filename, int _x, int _y, int _width, int _height)
 {
-	std::map<std::string,Pair>::iterator it = m_sprites.find(_filename);
-	
+	std::map<std::string,Pair>::iterator it;// = m_sprites.find(_filename);
+	it = m_sprites.find(_filename);
+
 	if(it == m_sprites.end())
 	{
 		std::cout << "Sprite not found" << std::endl;

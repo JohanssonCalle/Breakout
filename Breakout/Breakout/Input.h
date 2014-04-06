@@ -15,6 +15,7 @@ public:
 
 	bool IsDown(int key) const;
 	bool IsDownOnce(int key) const;
+	bool IsDownOnceAny() const;
 
 	void PostUpdate();
 
@@ -32,6 +33,7 @@ public:
 	int GetY() const;
 	bool IsDown(EMouseButton button) const;
 	bool IsDownOnce(EMouseButton button) const;
+	bool IsDownOnceAny() const;
 
 	void PostUpdate();
 

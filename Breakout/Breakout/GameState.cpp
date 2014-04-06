@@ -11,50 +11,49 @@
 #include "Level.h"
 #include "DrawManager.h"
 #include "SpriteManager.h"
+#include "GameObjectManager.h"
 #include "Sprite.h"
 
 GameState::GameState(Engine* _engine) {
-	std::cout << "GameState::GameState" << std::endl;
-
 	m_engine = _engine;
 
+	m_gameobject_manager = new GameObjectManager();
 
+	m_level = new Level(m_gameobject_manager);
 };
 
 bool GameState::Enter() {
-	std::cout << "GameState::Enter" << std::endl;
-
 	scale = m_engine->scale;
 
-	m_level->Load("levels/level.txt", m_engine->m_sprite_manager);
-	Sprite* spr_player = m_engine->m_sprite_manager->getSprite("sprites/pad_player.png",0,0,200,30);
-	Sprite* spr_ball = m_engine->m_sprite_manager->getSprite("sprites/ball.png",0,0,40,40);
-	Sprite* spr_bricks = m_engine->m_sprite_manager->getSprite("sprites/brick.png",0,0,140, 50);
+	if(!m_level->Load("../data/level/level.txt", m_engine->m_sprite_manager))
+		return false;
+
+
 
 	return true;
 };
 
 void GameState::Exit() {
-	std::cout << "GameState::Exit" << std::endl;
-
-
 	delete m_level; m_level = nullptr;
+	delete m_gameobject_manager;
+	m_gameobject_manager = nullptr;
 	delete m_engine; m_engine = nullptr;
 };
 
 bool GameState::Update(float deltatime) {
-	std::cout << "GameState::Update" << std::endl;
-	return false;
+	m_gameobject_manager->UpdateAllGameObject(deltatime);
+	
+	if(m_engine->m_window_height == 2)
+		return false;
+
+	return true;
 };
 
 void GameState::Draw() {
-	std::cout << "GameState::Draw" << std::endl;
-
-	//m_engine->m_draw_manager->Draw();
+	m_gameobject_manager->DrawAllGameObjects(m_engine->m_draw_manager);
 };
 
 std::string GameState::Next() {
-	std::cout << "GameState::Next" << std::endl;
 	return "MenuState";
 };
 

@@ -14,11 +14,9 @@ DrawManager::DrawManager() {
 DrawManager::~DrawManager() {
 };
 
-bool DrawManager::Initialize(SDL_Window *window, int width, int height) {
-	m_renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	if(m_renderer == nullptr) {
-		return false;
-	};
+bool DrawManager::Initialize(struct SDL_Renderer *_renderer) {
+	m_renderer = _renderer;
+	if(m_renderer == nullptr){return false;}
 
 	return true;
 };
@@ -31,7 +29,7 @@ void DrawManager::Cleanup() {
 };
 
 void DrawManager::Clear() {
-	SDL_SetRenderDrawColor(m_renderer, 0x11, 0x22, 0x33, 0xff);
+	SDL_SetRenderDrawColor(m_renderer, 0x11, 0x11, 0x11, 0xff);
 	SDL_RenderClear(m_renderer);
 };
 

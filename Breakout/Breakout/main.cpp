@@ -1,6 +1,5 @@
 //main.cpp
 
-
 #include "Engine.h"
 
 int main(int argc, char* argv[])
@@ -12,8 +11,6 @@ int main(int argc, char* argv[])
 		engine.Run();
 		engine.CleanUp();
 	}
-	else 
-	return 8;
 
 	return 0;
 }

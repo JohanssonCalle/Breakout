@@ -3,7 +3,10 @@
 #include "PlayerObject.h"
 
 #include "Sprite.h"
+#include "Collider.h"
 #include "DrawManager.h"
+
+#include "Input.h"
 
 PlayerObject::PlayerObject(Sprite* _sprite, Collider* _collider)
 	: GameObject(_sprite, _collider)
@@ -12,21 +15,15 @@ PlayerObject::PlayerObject(Sprite* _sprite, Collider* _collider)
 	m_collider = _collider;
 }
 
-PlayerObject::PlayerObject(Sprite* _sprite, Collider* _collider, int _x, int _y)
-	: GameObject(_sprite, _collider)
+PlayerObject::~PlayerObject()
 {
-	m_sprite = _sprite;
-	m_collider = _collider;
-	m_pos = Vector2(_x, _y);
+	delete m_sprite; m_sprite = nullptr;
+	delete m_collider; m_collider = nullptr;
 }
 
-PlayerObject::PlayerObject(Sprite* _sprite, Collider* _collider, int _x, int _y, int _width, int _height)
-	: GameObject(_sprite, _collider)
+void PlayerObject::getMouse(Mouse* _mouse)
 {
-	m_sprite = _sprite;
-	m_collider = _collider;
-	m_pos = Vector2(_x, _y);
-	m_dimensions = Vector2(_width, _height);
+	m_mouse = _mouse;
 }
 
 void PlayerObject::setPosition(int _x, int _y)
@@ -51,18 +48,22 @@ void PlayerObject::setDimensions(Vector2 _dimensions)
 
 void PlayerObject::Update(float _deltatime)
 {
-
+	m_pos.m_x = m_mouse->GetX() - m_collider->m_extension.m_x/2;
+	
+	if(m_pos.m_x < 80*m_scale.m_x)
+	{
+		m_pos.m_x = 80*m_scale.m_x;
+	}
+	if(m_pos.m_x > m_window_dimensions.m_x - 80*m_scale.m_x - m_collider->m_extension.m_x)
+	{
+		m_pos.m_x = m_window_dimensions.m_x - 80*m_scale.m_x - m_collider->m_extension.m_x;
+	}
 }
 
-void PlayerObject::Draw()
+void PlayerObject::Draw(DrawManager* _draw_manager)
 {
-
+	_draw_manager->Draw(m_sprite, m_pos.m_x, m_pos.m_y);
 }
-
-Sprite* PlayerObject::getSprite(){return m_sprite;}
-
-Collider* PlayerObject::getCollider(){return m_collider;}
 
 Vector2 PlayerObject::getPosition(){return m_pos;}
-
 Vector2 PlayerObject::getDimensions(){return m_dimensions;}

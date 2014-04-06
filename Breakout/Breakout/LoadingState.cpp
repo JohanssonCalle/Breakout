@@ -7,6 +7,7 @@
 #include <iostream>
 #include "LoadingState.h"
 #include "Engine.h"
+#include "SpriteManager.h"
 
 LoadingState::LoadingState(Engine* _engine) {
 	std::cout << "LoadingState::LoadingState" << std::endl;
@@ -18,6 +19,8 @@ bool LoadingState::Enter() {
 	std::cout << "LoadingState::Enter" << std::endl;
 
 	scale = m_engine->scale;
+
+	m_engine->m_sprite_manager->Load("sprites/spr_map.png",0,0,160,160);
 
 	return true;
 };

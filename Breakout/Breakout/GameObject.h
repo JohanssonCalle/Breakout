@@ -2,59 +2,37 @@
 
 #pragma once
 
-#include <vector>
+#include "Vector2.h"
 
 class Sprite;
 class Collider;
+class DrawManager;
 
 class GameObject {
 	//friend class CollisionManager;
 
 public:
-	GameObject();
-	GameObject(Sprite* _sprite, Collider* _collider);
-	virtual ~GameObject();
+	GameObject(Sprite* _sprite = nullptr, Collider* _collider = nullptr);
 
 	virtual void Update(float deltatime) = 0;
+	virtual void Draw(DrawManager* _draw_manager) = 0;
 
-	static unsigned int GetCount();
+	void giveWindowDimensions(Vector2 _dimensions);
+	void setID(int _id);
+
+	bool hasSprite();
+	Sprite* getSprite();
+	bool hasCollider();
+	Collider* getCollider();
 
 protected:
-	static unsigned int ms_object_count;
+	Vector2 m_scale;
+	Vector2 m_window_dimensions;
+
+	static unsigned int ID;
 	float m_x;
 	float m_y;
 
 	Sprite* m_sprite;
 	Collider* m_collider;
 };
-
-
-//class Player : public GameObject {
-//public:
-//	Player();
-//	~Player();
-//
-//	void Update(float deltatime);
-//
-//protected:
-//	int m_score;
-//};
-//
-//class Enemy : public GameObject {
-//public:
-//	~Enemy();
-//
-//	void Update(float deltatime);
-//};
-//
-//class GameObjectManager {
-//public:
-//	GameObjectManager();
-//	~GameObjectManager();
-//
-//	void Attach(GameObject *object);
-//	void UpdateAllGameObject(float deltatime);
-//
-//private:
-//	std::vector<GameObject*> m_objects;
-//};

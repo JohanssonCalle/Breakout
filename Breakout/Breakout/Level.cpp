@@ -1,30 +1,32 @@
 // Level.cpp
 
-#include <sstream>
-#include <fstream>
-#include "Sprite.h"
-#include "SpriteManager.h"
-#include "DrawManager.h"
-#include "GameObject.h"
-#include "Collider.h"
 #include "Level.h"
 
-Level::Level() {
+#include <string>
+#include <sstream>
+#include <fstream>
+
+#include "Sprite.h"
+#include "SpriteManager.h"
+
+#include "DrawManager.h"
+
+#include "GameObject.h"
+#include "Brick.h"
+#include "GameObjectManager.h"
+
+#include "Collider.h"
+
+#include "Engine.h"
+
+Level::Level(GameObjectManager* _gameobject_manager) {
 	m_width = 0;
 	m_height = 0;
 
-	m_start_position = Vector2(0.0f, 0.0f);
+	m_gameobject_manager = _gameobject_manager;
 };
 
 Level::~Level() {
-	auto it = m_objects.begin();
-	while(it != m_objects.end()) {
-		//delete (*it)->getSprite();
-		//delete (*it)->getCollider();
-		delete (*it);
-		++it;
-	};
-	m_objects.clear();
 };
 
 bool Level::Load(const std::string &filename, SpriteManager *sprite_manager) {
@@ -67,12 +69,19 @@ bool Level::Load(const std::string &filename, SpriteManager *sprite_manager) {
 				x += m_width;
 				continue;
 			}
-			else if(row[i] == 'S') {
+			/*else if(row[i] == 'S') {
 				m_start_position.m_x = x;
 				m_start_position.m_y = y;
 				x += m_width;
 				continue;
-			};
+			}
+			else if(row[i] == 'B')
+			{
+				m_ball_position.m_x = x;
+				m_ball_position.m_y = y;
+				x += m_width;
+				continue;
+			}*/
 
 			std::map<char,Coords>::iterator it = m_tile_coords.find(row[i]);
 			if(it == m_tile_coords.end()) {
@@ -80,15 +89,16 @@ bool Level::Load(const std::string &filename, SpriteManager *sprite_manager) {
 			};
 
 			Coords &c = it->second;
-			Sprite *sprite = sprite_manager->getSprite(m_spritemap_filename, c.x, c.y, c.w, c.h); 
+			Sprite* sprite = sprite_manager->getSprite(m_spritemap_filename, c.x, c.y, c.w, c.h);
 
-			Collider *collider = new Collider;
+			Box* collider = new Box();
 			collider->m_position = Vector2(x, y);
 			collider->m_extension = Vector2(c.w, c.h);
 
-			//GameObject *go = new GameObject(sprite, collider);
-			//go->SetPosition(Vector2(x, y));
-			//m_objects.push_back(go);
+			Brick* brick = new Brick(sprite, collider);
+			brick->setPosition(Vector2(x,y));
+			brick->setID(0);
+			m_gameobject_manager->Attach(brick);
 
 			x += m_width;
 		};
@@ -98,14 +108,6 @@ bool Level::Load(const std::string &filename, SpriteManager *sprite_manager) {
 	stream.close();
 
 	return true;
-};
-
-void Level::Draw(DrawManager *draw_manager) {
-	/*for(auto i = 0UL; i < m_objects.size(); i++) {
-		draw_manager->Draw(m_objects[i]->GetSprite(),
-			m_objects[i]->GetPosition().m_x,
-			m_objects[i]->GetPosition().m_y);
-	};*/
 };
 
 bool Level::CheckCollision(GameObject *object, Vector2 &offset) {
@@ -129,9 +131,4 @@ bool Level::CheckCollision(GameObject *object, Vector2 &offset) {
 		return true;
 	};*/
 	return false;
-};
-
-
-Vector2 Level::GetPlayerStartPosition() {
-	return m_start_position;
 };

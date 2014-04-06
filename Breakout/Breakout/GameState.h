@@ -7,6 +7,7 @@
 #include "Vector2.h"
 
 class Engine;
+class GameObjectManager;
 class Level;
 
 class GameState : public State {
@@ -22,6 +23,7 @@ public:
 
 private:
 	Engine* m_engine;
+	GameObjectManager* m_gameobject_manager;
 	Level* m_level;
 
 	Vector2 scale;

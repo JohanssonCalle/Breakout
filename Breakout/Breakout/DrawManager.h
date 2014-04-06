@@ -11,7 +11,7 @@ public:
 	DrawManager();
 	~DrawManager();
 
-	bool Initialize(struct SDL_Window *window, int width, int height);
+	bool Initialize(struct SDL_Renderer *_renderer);
 	void Cleanup();
 
 	void Clear();

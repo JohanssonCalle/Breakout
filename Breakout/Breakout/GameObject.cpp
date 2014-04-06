@@ -6,75 +6,28 @@
 #include "Sprite.h"
 #include "Collider.h"
 
-unsigned int GameObject::ms_object_count = 0;
-
-unsigned int GameObject::GetCount() {
-	return ms_object_count;
-};
-
-GameObject::GameObject() {
-	ms_object_count++;
-	m_x = 0.0f;
-	m_y = 0.0f;
-};
+unsigned int GameObject::ID = 0;
 
 GameObject::GameObject(Sprite* _sprite, Collider* _collider)
 {
 	m_sprite = _sprite;
 	m_collider = _collider;
-
-	ms_object_count++;
-	m_x = 0.0f;
-	m_y = 0.0f;
 }
 
-GameObject::~GameObject() {
-	std::cout << "GameObject::~GameObject" << std::endl;
-	ms_object_count--;
-};
+void GameObject::giveWindowDimensions(Vector2 _dimensions)
+{
+	m_window_dimensions = _dimensions;
 
-/*void GameObject::Update(float deltatime) {
-	std::cout << "GameObject::Update" << std::endl;
-};*/
+	m_scale.m_x = (float)m_window_dimensions.m_x/1280.f;
+	m_scale.m_y = (float)m_window_dimensions.m_y/720.f;
+}
 
-//Player::Player() {
-//	m_score = 0;
-//};
-//
-//Player::~Player() {
-//	std::cout << "Player::~Player" << std::endl;
-//};
-//
-//void Player::Update(float deltatime) {
-//	std::cout << "Player::Update" << std::endl;
-//};
-//
-//Enemy::~Enemy() {
-//	std::cout << "Enemy::~Enemy" << std::endl;
-//};
-//
-//void Enemy::Update(float deltatime) {
-//	std::cout << "Enemy::Update" << std::endl;
-//};
-//
-//GameObjectManager::GameObjectManager() {
-//};
-//
-//GameObjectManager::~GameObjectManager() {
-//	auto it = m_objects.begin();
-//	while(it != m_objects.end()) {
-//		delete (*it);
-//		++it;
-//	};
-//	m_objects.clear();
-//};
-//
-//void GameObjectManager::Attach(GameObject *object) {
-//	m_objects.push_back(object);
-//};
-//
-//void GameObjectManager::UpdateAllGameObject(float deltatime) {
-//	for(unsigned int i = 0; i < m_objects.size(); i++) {
-//		m_objects[i]->Update(deltatime);
-//	};
-//};
+void GameObject::setID(int _id)
+{
+	ID = _id;
+}
+
+bool GameObject::hasSprite(){return m_sprite != nullptr;}
+Sprite* GameObject::getSprite(){return m_sprite;}
+bool GameObject::hasCollider(){return m_collider != nullptr;}
+Collider* GameObject::getCollider(){return m_collider;}
